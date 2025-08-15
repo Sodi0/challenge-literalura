@@ -104,9 +104,13 @@ public class Principal {
 
     public void listarLibros(){
         books = bookRepository.findAll();
+        if (!books.isEmpty()){
         books.stream()
                 .sorted(Comparator.comparing(Book::getTitle))
-                .forEach(System.out::println);
+                .forEach(System.out::println);}
+        else {
+            System.out.println("No hay libros encontrados. Ingrese al sistema por la opcion 1");
+        }
     }
     public void listarAutores(){
         authors = authorRepository.findAll();
@@ -116,7 +120,7 @@ public class Principal {
                     .sorted(Comparator.comparing(Author::getName))
                     .forEach(System.out::println);
         }else
-            System.out.println("SIN REGISTROS");
+            System.out.println("SIN REGISTROS DE AUTORES. ingrese primero al sistema por la opcion 1");
 
     }
 
@@ -127,9 +131,13 @@ public class Principal {
             Idiomas idiomaEnum = Idiomas.fromTexto(idioma);
             System.out.println("Idioma válido: " + idiomaEnum);
             books = bookRepository.buscarLibrosPorIdioma(idiomaEnum);
+            if(!books.isEmpty()){
             books.stream()
                     .sorted(Comparator.comparing(Book::getTitle))
-                    .forEach(System.out::println);
+                    .forEach(System.out::println);}
+            else{
+                System.out.println("No se encontraron resultados. Ingrese primero libros al sistema con la opcion 1");
+            }
         } else {
             System.out.println("Idioma inválido.");
         }
@@ -140,9 +148,13 @@ public class Principal {
         Integer anio = scanner.nextInt();
 
         authors = authorRepository.buscarAutoresVivo(anio);
-        authors.stream()
-                .sorted(Comparator.comparing(Author::getName))
-                .forEach(System.out::println);
+        if(!authors.isEmpty()){
+            authors.stream()
+                    .sorted(Comparator.comparing(Author::getName))
+                    .forEach(System.out::println);
+        } else {
+            System.out.println("No se encontraron resultados.");
+        }
     }
 
     private boolean idiomaExiste(String texto) {
@@ -154,9 +166,4 @@ public class Principal {
         }
         return false;
     }
-
-
-
-
-
 }
